@@ -18,6 +18,12 @@ def extract_info(n, data):
     }
     return to_do[n](data)
 
+update_search = True
+try:
+    old_version = pd.read_csv("viz_app/data/character_summary.csv", index_col = 0)
+    old_char_set = set(old_version["name"])
+except:
+    update_search = False
 
 root_url = "https://genshin-impact.fandom.com/wiki/"
 characters_request = requests.get(root_url + "Characters/List")
@@ -78,3 +84,12 @@ pd.concat([level_df, pd.DataFrame.from_dict(all_ATK)], axis=1).to_csv("viz_app/d
 pd.concat([level_df, pd.DataFrame.from_dict(all_HP)], axis=1).to_csv("viz_app/data/all_HP.csv")
 pd.concat([level_df, pd.DataFrame.from_dict(all_DEF)], axis=1).to_csv("viz_app/data/all_DEF.csv")
 print('all data extracted')
+
+if update_search:
+    new_char_set = set(character_df["name"])
+    new_characters = new_char_set.difference(old_char_set)
+    if len(new_characters) > 0:
+        print("The following new characters were added:")
+        print(character_df.loc[character_df["name"].isin(new_characters)])
+    else:
+        print("No new character data added")

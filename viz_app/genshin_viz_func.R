@@ -34,7 +34,7 @@ coherent_vec<- function(vec){
   )
 }
 
-#generate subtitle for plot basedon on user query
+#generate subtitle for plot based on on user query
 generate_subtitle <- function(weapon_input, 
                               rarity_input, 
                               sex_input, 
@@ -112,7 +112,7 @@ genshin_plot <- function(queried_characters, data, title, subtitle){
     scale_size_manual(values=rep(1., length(queried_characters))) +
     labs(title=title, 
          subtitle=str_wrap(subtitle, 100), 
-         y="Value")
+         y="Value") 
 }
 
 
