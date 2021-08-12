@@ -89,7 +89,7 @@ generate_subtitle <- function(weapon_input,
 
 
 #plot data based on character query
-genshin_plot <- function(queried_characters, data, title, subtitle){
+genshin_plot <- function(queried_characters, data, title, subtitle, ylabel){
   mutated_data <- mutate(data, 
                          Character = ifelse(variable %in% queried_characters,
                                             as.character(variable),
@@ -97,12 +97,12 @@ genshin_plot <- function(queried_characters, data, title, subtitle){
   ggplot() +
     geom_line(data = mutated_data[mutated_data$Character == "[Other]",],
               aes(x = Level, 
-                  y = ATK, 
+                  y = val, 
                   group = variable, 
                   color = Character)) +
     geom_line(data = mutated_data[mutated_data$Character != "[Other]",],
               aes(x = Level, 
-                  y = ATK, 
+                  y = val, 
                   group = variable, 
                   color = variable, 
                   size = Character), 
@@ -112,7 +112,7 @@ genshin_plot <- function(queried_characters, data, title, subtitle){
     scale_size_manual(values=rep(1., length(queried_characters))) +
     labs(title=title, 
          subtitle=str_wrap(subtitle, 100), 
-         y="Value") 
+         y=ylabel) 
 }
 
 
